@@ -1,3 +1,5 @@
+//import { useEffect } from "react";
+//import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Admin from "./components/Admin/Admin";
 import Auth from "./components/Auth/Auth";
@@ -7,8 +9,10 @@ import Movies from "./components/Movies/Movies";
 //import UserProfile from "./Profile/userProfile";
 //import { adminActions, userActions } from "./store";
 
+function App() {
+  
+  
 
-function App(){
   return (
     <div>
 <Header />
@@ -21,11 +25,13 @@ function App(){
           {/*<Route path="/booking/:id" element={<Booking /> } />*/}
           
 
-        </Routes>
-      </section>
-    </div>
+
+
+
+</Routes>
+    </section>
+  </div>
   )
 }
 
 export default App;
-
