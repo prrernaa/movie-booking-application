@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { sendAdminAuthRequest } from '../../Api-helpers/api-helpers';
 import { adminActions } from '../../store';
-import AuthForm from '../Auth/AuthForm'
+import AuthForm from '../Auth/AuthForm';
 
 
 const Admin = () => {
@@ -27,4 +27,4 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default Admin;

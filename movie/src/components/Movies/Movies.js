@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Box } from '@mui/system'
 import { Typography } from '@mui/material'
-import MovieItem from './MovieItem'
-import { getAllMovie } from '../../Api-helpers/api-helpers'
+import { getAllMovies } from '../../Api-helpers/api-helpers';
+import MovieItems from './MovieItem'
 const Movies = () => {
   const [Movies, setMovies] = useState([])
   useEffect(()=>{
-    getAllMovie().then((data)=>setMovies(data.movies)).catch((err)=>console.log(" no data found"))
+    getAllMovies().then((data)=>setMovies(data.movies)).catch((err)=>console.log(" no data found"))
   }
   ,[])
   
@@ -17,17 +17,12 @@ const Movies = () => {
     All Movies
   </Typography>
   <Box width={"100%"} margin={'auto'} marginTop='5' display={"flex"} justifyContent='flex-start' flexWrap={'wrap'}>
-    {Movies.map((item,index)=>
-      <MovieItem
-        id={item._id}
-        title={item.title}
-        posterUrl={item.posterUrl}
-        releaseDate={item.releaseDate}
-        key={index} />
+    {Movies.map((item,idex)=>
+      <MovieItems id={item._id} title={item.title} posterUrl={item.posterUrl} releaseDate={item.releaseDate} key={idex}/>
     )}
   </Box>
     </Box>
   )
 }
 
-export default Movies
+export default Movies;
