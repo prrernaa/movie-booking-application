@@ -1,14 +1,15 @@
-const express = require('express');
-
-const app = express();
+const express=require('express');
+const app=express();
 const moongoose = require('mongoose');
+const UserRouter=require('./routes/userRoutes');
+const adminRouter = require('./routes/adminRoutes');
+const movieRouter = require('./routes/moviesRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const dotenv = require('dotenv');
-const userRouter = require('./routes/user-routes');
-const adminRouter = require('./routes/admin-routes');
-const movieRouter = require('./routes/movie-routes');
-const bookingRouter = require('./routes/booking-routes');
 dotenv.config();
 
+
+// PORT NUMBER 
 const cors = require('cors');
 app.use(cors());
 app.use((req, res, next) => {
@@ -18,12 +19,13 @@ app.use((req, res, next) => {
     next();
     
 })
-//middleware
+
+// middleware routes
 app.use(express.json());
-app.use("/user", userRouter);
-app.use("/admin", adminRouter);
-app.use("/movie", movieRouter);
-app.use('/booking', bookingRouter);
+app.use('/users',UserRouter);
+app.use('/admin',adminRouter);
+app.use('/movies',movieRouter);
+app.use('/booking',bookingRouter)
 
 
 
