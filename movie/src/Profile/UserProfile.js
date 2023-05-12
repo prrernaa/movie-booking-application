@@ -4,44 +4,40 @@ import { Box, IconButton, List, ListItem, ListItemText, Typography } from '@mui/
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 const UserProfile = () => {
-
-  const [bookings, setbookings] = useState()
+ 
+  const [Bookings, setBookings] = useState()
 
   const [User, setUser] = useState();
 
   useEffect(()=>{
      getUserBooking()
-     .then((res)=>setbookings(res.bookings))
+     .then((res)=>setBookings(res.bookings))
      .catch((err)=>{console.log(err)});  
 
      getUserDetails()
-     .then((res) => setUser(res.User))
+     .then((res) => setUser(res.users))
      .catch(err => console.log(err));
   },[])
-
-  console.log(bookings);
+  
+  console.log(User);
+  console.log(Bookings);
 
   const handleDelete=(id)=>{
     deleteBooking(id).then((res)=>console.log(res)).catch((err)=>console.log(err));
   }
-
-
-  
-  console.log(User);
-
   return (
     <Box width={"100%"} display="flex">
     <Fragment>
       
-    {User&&(
+    {User && (
       <Box
       flexDirection={'column'}
-      width={"30"}
+      width={"30%"}
       justifyContent="center"
       alignItems={"center"}
       padding={3}>
 
-      <AccountCircleIcon sx={{ fontSize: "10rem", textAlign: 'center', ml: 2 }} />
+      <AccountCircleIcon sx={{ fontSize: "10rem", textAlign: 'center', ml: 3 }} />
 
       <Typography
         mt={1}
@@ -53,6 +49,7 @@ const UserProfile = () => {
       </Typography>
 
       <Typography
+        mt={1}
         padding={1}
         width={"auto"}
         textAlign={'center'}
@@ -65,37 +62,30 @@ const UserProfile = () => {
 
 
     
-    {bookings &&
-        (bookings.length > 0) & ( < Box width={"70%"}
-        display="flex"
-        flex-direction={"column"}
-      >
-        <Typography variant='h3' fontFamily={'verdana'} textAlign="center"
-          padding={2}
-        >
+    {Bookings && Bookings.length > 0 && ( 
+      <Box width={"70%"}>
+        <Typography variant='h3' fontFamily={'verdana'} textAlign="center" padding={3}>
           Bookings
         </Typography>
         <Box margin={'auto'}
           display="flex"
           flexDirection={'column'}
-          width="80%"
-        >
+          width="80%" marginRight={10}>
           <List>
-            {bookings.map((booking, index) => (
+            {Bookings.map((booking, index) => (
               <ListItem
                 sx={{
-                  bgcolor: "#000d386",
+                  bgcolor: "#00d386",
                   color: "white",
                   textAlign: "center",
                   margin: 1,
-                }}
-              >
+                  
+                }}>
                 <ListItemText sx={{
                   margin: 1,
                   width: 'auto',
                   textAlign: "left"
-                }}
-                >
+                }}>
                   Movie: {booking.movie.title}
                   
                 </ListItemText>
@@ -104,24 +94,19 @@ const UserProfile = () => {
                 <ListItemText sx={{
                   margin: 1,
                   width: 'auto',
-                  textAlign: "left"
-                }}
-                >
+                  textAlign: "left"}}>
                   Seat: {booking.seatNumber}
                 </ListItemText>
 
                 <ListItemText sx={{
                   margin: 1,
                   width: 'auto',
-                  textAlign: "left"
-                }}
-                >
+                  textAlign: "left"}}>
                   Date: {new Date(booking.date).toDateString()}
                 </ListItemText>
                 <IconButton onClick={() => handleDelete(booking._id)} color='error'>
                   <DeleteForeverIcon
-                    color='red'
-                  />
+                    color='red'/>
                 </IconButton>
               </ListItem>
             ))}
@@ -139,3 +124,4 @@ const UserProfile = () => {
 }
 
 export default UserProfile
+
