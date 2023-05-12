@@ -1,9 +1,9 @@
 const express=require('express');
 const app=express();
 const moongoose = require('mongoose');
-const UserRouter=require('./routes/userRoutes');
+const userRouter=require('./routes/userRoutes');
 const adminRouter = require('./routes/adminRoutes');
-const movieRouter = require('./routes/moviesRoutes');
+const moviesRouter = require('./routes/moviesRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -22,9 +22,9 @@ app.use((req, res, next) => {
 
 // middleware routes
 app.use(express.json());
-app.use('/users',UserRouter);
+app.use('/users',userRouter);
 app.use('/admin',adminRouter);
-app.use('/movies',movieRouter);
+app.use('/movies',moviesRouter);
 app.use('/booking',bookingRouter)
 
 

@@ -1,55 +1,42 @@
-const Movies=require("../Models/Movie");
-const jwt=require('jsonwebtoken');
+const jwt = require("jsonwebtoken")
+const Movie = require("../Models/Movie")
 const mongoose=require('mongoose');
 const admin = require("../Models/admin");
-const addMovies=async(req,res,next)=>{
-    const extractToken= req.headers.authorization.Split("")[1];
 
-    if(!extractToken && extractToken.trim()===""){
-        return res.status(401).json({
-            message:"no Token provided"
-        })
+const addMovie = async (req, res, next) => { 
+    const extractedToken = req.headers.authorization.split(" ")[1];
+    if(!extractedToken && extractedToken.trim() ==="") {
+        return res.status(404).json({message: "Token not found"})
     }
-    console.log(extractToken);
+    console.log(extractedToken);
     let adminId;
-    jwt.verify(extractToken,process.env.SECERT_KEY,(err,decrypted)=>{
-        if(err)
-        {
-            return res.status(401).json({
-                message:"Invalid Token",
-            });
+
+    //verify token
+    jwt.verify(extractedToken, process.env.SECRET_KEY, (err, decrypted) => {
+        if(err){
+            return res.status(401).json({message: 'Invalid Token'})
         }
         else{
-            adminId=decrypted.id;
+            adminId = decrypted.id;
             return;
         }
     })
 
-    const {title,description,releaseDate,posterUrl,featured,actors}=req.body;
+    //create new movie
+    const { title, description, releaseDate, posterUrl, featured, actors } = req.body;
     console.log(req.body);
 
         if(res.status==400)
         {
             res.send("error");
         }
-    if(!title && title.trim() === "" && !description && description.trim()=== "" && !posterUrl&&posterUrl.trim()=== "")
-    {
-        return res.status(422).json({
-            message:"Invalid Inputs"
-        }) 
+    if(!title && title.trim() ==="" && !description && description.trim() ==="" && !posterUrl && posterUrl.trim() ===""){
+        return res.status(422).json({message: `Invalid Inputs`})
     }
 
-    let movie;
+    let movie; 
     try{
-        movie=new Movies({
-            title,
-            description,
-            releaseDate: new Date(`${releaseDate}`),
-            posterUrl,
-            featured,
-            admin:adminId,
-            actors
-        })
+        movie = new Movie({title, description, releaseDate: new Date(`${releaseDate}`), posterUrl, featured, actors, admin: adminId})
         
         const session=await mongoose.startSession();
         const adminUser= await admin.findById(adminId);
@@ -60,59 +47,45 @@ const addMovies=async(req,res,next)=>{
         await adminUser.save({session});
 
         await session.commitTransaction();
-    }
-    catch(err)
-    {
+    } catch (err){
         return res.send(err.message);
     }
-    if(!movie)
-    {
-        return res.status(500).json({
-            message:"something went wrong"
-        })
+
+    if(!movie) {
+        return res.status(500).json({message: "Request Failed"})
     }
     return res.status(201).json({movie})
 }
 
-const getallMovies=async(req,res,next)=>{
+const getAllMovie = async (req, res, next) => {
+    
     let movies;
     try{
-        movies=await Movies.find();
+        movies = await Movie.find();
+    } catch (err){
+        return console.log(err);
     }
-    catch(err){
-        return res.send(err.message);
-    }
-    if(!movies)
-    {
-        return res.status(500).json({
-            message:"something went wrong"
-        })
-    }
-    return res.status(200).json({movies})
 
+    if(!movies){
+        return res.status(500).json({message: "Request failed"});
+    }
+    return res.status(200).json({movies});
 }
 
-
-
-const getMoviesbyId=async(req,res)=>{
-    const id=req.params.id;
+const getMovieById = async (req, res, next) => {
+    const id = req.params.id;
     let movie;
+
     try{
-        movie=await Movies.findById(id);
-
+        movie = await Movie.findById(id);
+    } catch (err){
+        return console.log(err);
     }
-    catch(err)
-    {
-        return res.send(err.message);
+    if(!movie){
+        return res.status(404).json({message: "Invalid Movie Id"});
     }
-
-    if(!movie)
-    {
-        return res.status(404).json({
-            message:'movie not found'
-        })
-    }
-return res.status(200).json({movie});
-
+    return res.status(200).json({movie})
 }
-module.exports={addMovies,getallMovies,getMoviesbyId}
+
+
+module.exports = {addMovie, getAllMovie, getMovieById}
