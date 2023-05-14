@@ -9,7 +9,7 @@ import {AppBar,
   Tabs, 
   TextField, 
   Toolbar} from '@mui/material'
-import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
+import MovieFilterIcon from '@mui/icons-material/MovieFilter';
 import { getAllMovies } from '../Api-helpers/api-helpers';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,11 +32,11 @@ const Header = () => {
   }
   
   return (
-    <AppBar position='sticky' sx={{bgcolor: "#2b2d42"}}>
+    <AppBar position='sticky' sx={{bgcolor: " rgb(59, 59, 59);"}}>
       <Toolbar>
         <Box width={'20%'}>
         <IconButton LinkComponent={Link} to="/" >
-          <TheaterComedyIcon />
+          <MovieFilterIcon />
         </IconButton>
         </Box>
         <Box width={'30%'} margin={'auto'}>
@@ -44,7 +44,7 @@ const Header = () => {
         freeSolo
         options={movies && movies.map((option) => option.title)}
         renderInput={(params) => (
-        <TextField sx={{input: {color: "white"}}} variant='standard' {...params} placeholder="Search Movies" />)}
+        <TextField sx={{input: {color: "white"}}} variant='standard' {...params} placeholder="Search Multiple Movies Across" />)}
       />
         </Box>
         <Box display={"flex"}>

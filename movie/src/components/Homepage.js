@@ -14,7 +14,7 @@ const Homepage = () => {
   return (
    <Box width={'100%'} height={'100%'} margin={'auto'} marginTop={2}>
     <Box margin={'auto'} width={'70%'} height={'40vh'} padding={2}>
-        <img src="https://i.ytimg.com/vi/flXhA8DOi84/maxresdefault.jpg" alt='movie-banner' width={'100%'} height={'100%'} />
+    <img src="https://www.koimoi.com/wp-content/new-galleries/2023/04/priyanka-chopra-jonas-was-better-than-mcu-stars-robert-downey-jr-chris-evans-revealed-citadel-director-joe-russo-01.jpg" alt='movie-banner' width={'100%'} height={'100%'} />
     </Box>
     <Box padding={5} margin={'auto'}>
         <Typography variant='h4' textAlign={"center"}>
@@ -22,9 +22,9 @@ const Homepage = () => {
         </Typography>
         </Box>
         <Box display='flex' margin='auto' width='80%' justifyContent={'center'} flexWrap='wrap'>
-            {movies && movies.slice(0,4).map((movie, index) => (
+            {movies && movies.slice(0,7).map((movie, index) => (
                 <MovieItem id={movie._id} 
-                title={movie.title} 
+                title={movie.title}
                 posterUrl={movie.posterUrl} 
                 releaseDate={movie.releaseDate} 
                 key={index} />))}
